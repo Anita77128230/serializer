@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-# TSV to YAML
+# Convert file format from TSV to YAML
 input_file = ARGV[0]
 output_file = ARGV[1]
 
@@ -26,11 +26,13 @@ end
 input_format_error if ARGV.length != 2
 file_not_found_error(input_file) unless File.exist?(input_file)
 
-def convert_tsv_to_yaml(input_file, output_file)
+# Convert TSV file to YAML file
+def tsv_to_yaml(input_file, output_file)
   data = read_tsv_file(input_file)
   save_as_yaml(data, output_file)
 end
 
+# Read data from TSV file
 def read_tsv_file(file)
   header, *lines = File.read(file).split("\n")
   header = header.chomp.split("\t")
@@ -40,6 +42,7 @@ def read_tsv_file(file)
   end
 end
 
+# Save data as YAML file
 def save_as_yaml(data, output_file)
   if File.exist?(output_file)
     output_file_exists_error(output_file)
@@ -49,4 +52,5 @@ def save_as_yaml(data, output_file)
   end
 end
 
-convert_tsv_to_yaml(input_file, output_file)
+# Main
+tsv_to_yaml(input_file, output_file)
