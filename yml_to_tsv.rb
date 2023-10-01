@@ -42,6 +42,13 @@ def load_yaml_file(file)
   data
 end
 
+def write_tsv_file(output_file, headers, data)
+  File.open(output_file, 'w') do |file|
+    file.puts headers.join("\t")
+    data.each { |row| file.puts headers.map { |header| row[header] }.join("\t") }
+  end
+end
+
 def save_as_tsv(data, output_file)
   if File.exist?(output_file)
     output_file_exists_error(output_file)
@@ -49,13 +56,6 @@ def save_as_tsv(data, output_file)
     headers = data.first.keys
     write_tsv_file(output_file, headers, data)
     puts "Data has been converted and saved to #{output_file}"
-  end
-end
-
-def write_tsv_file(output_file, headers, data)
-  File.open(output_file, 'w') do |file|
-    file.puts headers.join("\t")
-    data.each { |row| file.puts headers.map { |header| row[header] }.join("\t") }
   end
 end
 
